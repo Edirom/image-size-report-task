@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -118,9 +119,15 @@ public class ImageSizeTask extends Task{
         
         reader.setInput(iis);
         
-        int height = reader.getHeight(reader.getMinIndex());
-        int width = reader.getWidth(reader.getMinIndex());
-        Object[] formatData = {fileName, height, width};
+        //Setting decimal format without delimiters
+        DecimalFormat dec = new DecimalFormat();
+        dec.setGroupingUsed(false);
+        
+        int heightInt = reader.getHeight(reader.getMinIndex());
+        int widthInt = reader.getWidth(reader.getMinIndex());
+        String height = dec.format(heightInt);
+        String width = dec.format(widthInt);
+        
         
         MessageFormat format = new MessageFormat(formatString);
         out.println(format.format(formatData));
