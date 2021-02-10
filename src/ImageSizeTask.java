@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -32,7 +33,7 @@ public class ImageSizeTask extends Task{
   private String reportFile;
   private boolean checkUpToDate = true;
   private boolean failOnUnreadable = false;
-  private String formatString = "{0},{1},{2}";
+  private String formatString = "{0},{1},{2},{3}";
   
   public void addConfiguredFileSet(FileSet files) {
     if (imageFiles == null) {
@@ -128,6 +129,10 @@ public class ImageSizeTask extends Task{
         String height = dec.format(heightInt);
         String width = dec.format(widthInt);
         
+        // Creating a random UUID (Universally unique identifier).
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+        Object[] formatData = {fileName, height, width, randomUUIDString};
         
         MessageFormat format = new MessageFormat(formatString);
         out.println(format.format(formatData));
